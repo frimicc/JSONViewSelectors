@@ -24,4 +24,12 @@ class JSONDatabase {
             }
         }
     }
+    
+    func itemAsJSON(_ item: Dictionary<String, Any>) -> String? {
+        if let jsonData = try? JSONSerialization.data(withJSONObject: item, options: []) {
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            return jsonString
+        }
+        return nil
+    }
 }
