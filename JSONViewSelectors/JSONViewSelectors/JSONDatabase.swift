@@ -32,4 +32,49 @@ class JSONDatabase {
         }
         return nil
     }
+    
+    func locateClass(_ str: String) -> [Dictionary<String, Any>]? {
+        if let matchingSubviews = searchSubviews("class", matching: str, node: dict) {
+            return matchingSubviews
+        }
+        return nil
+    }
+    
+    func getSubviews(_ node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
+        if let subviews = node["subviews"] as? [Dictionary<String, Any>] {
+            return subviews
+        } else if let contentView = node["contentView"] as? Dictionary<String, Any> {
+            if let subviews = contentView["subviews"] as? [Dictionary<String, Any>] {
+                return subviews
+            }
+        }
+        return nil
+    }
+    
+    func searchSubviews(_ key: String, matching value: String, node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
+        var returnNodes: [Dictionary<String, Any>] = []
+        if let subviews = getSubviews(node) {
+            for item in subviews {
+                if nodeMatches(key, matching: value, node: item) {
+                    returnNodes.append(item)
+                    //TODO: recurse if looking for children as well as the parent
+                } else {
+                    if let matchingSubviews = searchSubviews(key, matching: value, node: item) {
+                        returnNodes.append(contentsOf: matchingSubviews)
+                    }
+                }
+            }
+            return returnNodes
+        }
+        return nil
+    }
+    
+    func nodeMatches(_ key: String, matching value: String, node: Dictionary<String, Any>) -> Bool {
+        if let nodeValue = node[key] as? String {
+            if nodeValue == value {
+                return true
+            }
+        }
+        return false
+    }
 }
