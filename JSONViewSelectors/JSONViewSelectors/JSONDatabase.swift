@@ -51,6 +51,15 @@ class JSONDatabase {
         return nil
     }
 
+    func locateClassName(_ str: String) -> [Dictionary<String, Any>]? {
+        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
+            return nodeMatches("classNames", matching: str, node: item)
+        }) {
+            return matchingSubviews
+        }
+        return nil
+    }
+
     func getSubviews(_ node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
         if let subviews = node["subviews"] as? [Dictionary<String, Any>] {
             return subviews
@@ -92,7 +101,15 @@ class JSONDatabase {
     }
     
     func nodeMatches(_ key: String, matching value: String, node: Dictionary<String, Any>) -> Bool {
-        if key == "identifier" {
+        if key == "classNames" {
+            if let classNames = node["classNames"] as? [String] {
+                for name in classNames {
+                    if name == value {
+                        return true
+                    }
+                }
+            }
+        } else if key == "identifier" {
             if let nodeValue = getIdentifier(node), nodeValue == value {
                 return true
             }
