@@ -17,7 +17,10 @@ class JSONSelector {
     
     func locateClass(_ str: String) -> [Dictionary<String, Any>]? {
         if let matchingSubviews = db.search(matching: {(item) -> Bool in
-            return nodeMatches("class", matching: str, node: item)
+            if let nodeValue = item["class"] as? String, nodeValue == str {
+                return true
+            }
+            return false
         }) {
             return matchingSubviews
         }
@@ -26,7 +29,10 @@ class JSONSelector {
     
     func locateIdentifier(_ str: String) -> [Dictionary<String, Any>]? {
         if let matchingSubviews = db.search(matching: {(item) -> Bool in
-            return nodeMatches("identifier", matching: str, node: item)
+            if let nodeValue = getIdentifier(item), nodeValue == str {
+                return true
+            }
+            return false
         }) {
             return matchingSubviews
         }
@@ -35,7 +41,14 @@ class JSONSelector {
     
     func locateClassName(_ str: String) -> [Dictionary<String, Any>]? {
         if let matchingSubviews = db.search(matching: {(item) -> Bool in
-            return nodeMatches("classNames", matching: str, node: item)
+            if let classNames = item["classNames"] as? [String] {
+                for name in classNames {
+                    if name == str {
+                        return true
+                    }
+                }
+            }
+            return false
         }) {
             return matchingSubviews
         }
@@ -53,25 +66,4 @@ class JSONSelector {
         return nil
     }
     
-    func nodeMatches(_ key: String, matching value: String, node: Dictionary<String, Any>) -> Bool {
-        if key == "classNames" {
-            if let classNames = node["classNames"] as? [String] {
-                for name in classNames {
-                    if name == value {
-                        return true
-                    }
-                }
-            }
-        } else if key == "identifier" {
-            if let nodeValue = getIdentifier(node), nodeValue == value {
-                return true
-            }
-        } else if let nodeValue = node[key] as? String {
-            if nodeValue == value {
-                return true
-            }
-        }
-        return false
-    }
-
 }

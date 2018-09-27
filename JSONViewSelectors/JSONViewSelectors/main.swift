@@ -14,7 +14,7 @@ let file = URL(fileURLWithPath: "/Users/michaelfriedman/Dropbox/MacProjects/JSON
 if let input = try? String(contentsOf: file) {
     let db = JSONDatabase(input)
     let selector = JSONSelector(db)
-    if let inputNodes = selector.locateClassName("column") {
+    if let inputNodes = selector.locateIdentifier("windowMode") {
         print("Found \(inputNodes.count) matches:")
         for item in inputNodes {
             if let output = db.itemAsJSON(item) {
