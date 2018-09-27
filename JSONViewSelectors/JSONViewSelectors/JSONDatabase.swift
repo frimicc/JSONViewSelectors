@@ -34,14 +34,18 @@ class JSONDatabase {
     }
     
     func locateClass(_ str: String) -> [Dictionary<String, Any>]? {
-        if let matchingSubviews = searchSubviews("class", matching: str, node: dict) {
+        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
+                return nodeMatches("class", matching: str, node: item)
+            }) {
             return matchingSubviews
         }
         return nil
     }
 
     func locateIdentifier(_ str: String) -> [Dictionary<String, Any>]? {
-        if let matchingSubviews = searchSubviews("identifier", matching: str, node: dict) {
+        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
+            return nodeMatches("identifier", matching: str, node: item)
+        }) {
             return matchingSubviews
         }
         return nil
@@ -69,15 +73,15 @@ class JSONDatabase {
         return nil
     }
     
-    func searchSubviews(_ key: String, matching value: String, node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
+    func searchSubviews(node: Dictionary<String, Any>, matching matchCallback: (Dictionary<String, Any>) -> Bool) -> [Dictionary<String, Any>]? {
         var returnNodes: [Dictionary<String, Any>] = []
         if let subviews = getSubviews(node) {
             for item in subviews {
-                if nodeMatches(key, matching: value, node: item) {
+                if matchCallback(item) {
                     returnNodes.append(item)
                     //TODO: recurse if looking for children as well as the parent
                 } else {
-                    if let matchingSubviews = searchSubviews(key, matching: value, node: item) {
+                    if let matchingSubviews = searchSubviews(node: item, matching: matchCallback) {
                         returnNodes.append(contentsOf: matchingSubviews)
                     }
                 }
