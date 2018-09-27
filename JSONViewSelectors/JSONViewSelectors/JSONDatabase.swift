@@ -44,18 +44,26 @@ class JSONDatabase {
         return nil
     }
     
+    func searchListOfNodes(_ nodes: [Dictionary<String, Any>], matching matchCallback: (Dictionary<String, Any>) -> Bool) -> [Dictionary<String, Any>]? {
+        var returnNodes: [Dictionary<String, Any>] = []
+        for item in nodes {
+            if matchCallback(item) {
+                returnNodes.append(item)
+                // If we match, don't search children, just return the whole thing, since children are part of the parent.
+            } else {
+                if let matchingSubviews = searchSubviews(node: item, matching: matchCallback) {
+                    returnNodes.append(contentsOf: matchingSubviews)
+                }
+            }
+        }
+        return returnNodes
+    }
+    
     func searchSubviews(node: Dictionary<String, Any>, matching matchCallback: (Dictionary<String, Any>) -> Bool) -> [Dictionary<String, Any>]? {
         var returnNodes: [Dictionary<String, Any>] = []
         if let subviews = getSubviews(node) {
-            for item in subviews {
-                if matchCallback(item) {
-                    returnNodes.append(item)
-                    //TODO: recurse if looking for children as well as the parent
-                } else {
-                    if let matchingSubviews = searchSubviews(node: item, matching: matchCallback) {
-                        returnNodes.append(contentsOf: matchingSubviews)
-                    }
-                }
+            if let matchingSubviews = searchListOfNodes(subviews, matching: matchCallback) {
+                returnNodes.append(contentsOf: matchingSubviews)
             }
             return returnNodes
         }
