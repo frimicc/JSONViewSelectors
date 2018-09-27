@@ -11,6 +11,14 @@ import Foundation
 class JSONDatabase {
     var dict: Dictionary<String, Any> = [:]
     var isEmpty: Bool = true
+
+    static func itemAsJSON(_ item: Dictionary<String, Any>) -> String? {
+        if let jsonData = try? JSONSerialization.data(withJSONObject: item, options: []) {
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            return jsonString
+        }
+        return nil
+    }
     
     init(_ str: String) {
         if let data = str.data(using: .utf8) {
@@ -23,14 +31,6 @@ class JSONDatabase {
                 print("\(error)")
             }
         }
-    }
-    
-    func itemAsJSON(_ item: Dictionary<String, Any>) -> String? {
-        if let jsonData = try? JSONSerialization.data(withJSONObject: item, options: []) {
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            return jsonString
-        }
-        return nil
     }
     
     func getSubviews(_ node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {

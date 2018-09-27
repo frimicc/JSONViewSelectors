@@ -8,20 +8,32 @@
 
 import Foundation
 
-let file = URL(string: "https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json")!
-if let input = try? String(contentsOf: file) {
+func printResults(_ inputNodes: [Dictionary<String, Any>]) {
+    for item in inputNodes {
+        if let output = JSONDatabase.itemAsJSON(item) {
+            print(output)
+        }
+    }
+    print("Found \(inputNodes.count) \(inputNodes.count == 1 ? "match" : "matches").")
+}
+
+
+let JSONViewFile = URL(string: "https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json")!
+if let input = try? String(contentsOf: JSONViewFile) {
     let db = JSONDatabase(input)
-    let selector = JSONSelector(db)
-    if let inputNodes = selector.selectFromDB("#windowMode") {
-        print("Found \(inputNodes.count) matches:")
-        for item in inputNodes {
-            if let output = db.itemAsJSON(item) {
-                print(output)
+    if !db.isEmpty {
+        let selector = JSONSelector(db)
+        print("Please enter your queries, one per line.\nType 'q' to quit.\n>", terminator: " ")
+        while let line = readLine() {
+            if line == "q" {
+                break
             }
+            if let inputNodes = selector.selectFromDB(line) {
+                printResults(inputNodes)
+            } else {
+                print("No matches.")
+            }
+            print(">", terminator: " ")
         }
     }
 }
-
-//
-//while let line = readLine() {
-//}
