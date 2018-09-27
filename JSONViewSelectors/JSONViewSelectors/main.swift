@@ -8,16 +8,6 @@
 
 import Foundation
 
-func printResults(_ inputNodes: [Dictionary<String, Any>]) {
-    for item in inputNodes {
-        if let output = JSONDatabase.itemAsJSON(item) {
-            print(output)
-        }
-    }
-    print("Found \(inputNodes.count) \(inputNodes.count == 1 ? "match" : "matches").")
-}
-
-
 let JSONViewFile = URL(string: "https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json")!
 if let input = try? String(contentsOf: JSONViewFile) {
     let db = JSONDatabase(input)
@@ -29,7 +19,7 @@ if let input = try? String(contentsOf: JSONViewFile) {
                 break
             }
             if let inputNodes = selector.selectFromDB(line) {
-                printResults(inputNodes)
+                ConsoleIO.printResults(inputNodes)
             } else {
                 print("No matches.")
             }
