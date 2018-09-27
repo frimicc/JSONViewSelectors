@@ -39,6 +39,7 @@ JSONViewSelectors --db <url to JSON file>
 If no --db is provided, the script will exit.
 After creating the DB from the JSON file, the script lets you enter CSS selectors at the prompt and finds the matching nodes in the file. Type 'q' to quit.
 
+NOTE: If you are loading a JSON file from GitHub, be sure to use the "Raw" data URL.
 """
         print(usage)
     }

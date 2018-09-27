@@ -5,6 +5,7 @@ A macOS command-line application written in Swift.
 Write a command line program in a language of your choosing that parses the following JSON file from stdin or from command line argument:
 
 https://github.com/jdolan/quetoo/blob/master/src/cgame/default/ui/settings/SystemViewController.json
+https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json
 
 Your program may assume that the file resides locally on the same filesystem as the program itself, or it may retrieve it via web request if you prefer.
 
