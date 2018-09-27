@@ -39,13 +39,31 @@ class JSONDatabase {
         }
         return nil
     }
-    
+
+    func locateIdentifier(_ str: String) -> [Dictionary<String, Any>]? {
+        if let matchingSubviews = searchSubviews("identifier", matching: str, node: dict) {
+            return matchingSubviews
+        }
+        return nil
+    }
+
     func getSubviews(_ node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
         if let subviews = node["subviews"] as? [Dictionary<String, Any>] {
             return subviews
         } else if let contentView = node["contentView"] as? Dictionary<String, Any> {
             if let subviews = contentView["subviews"] as? [Dictionary<String, Any>] {
                 return subviews
+            }
+        }
+        return nil
+    }
+    
+    func getIdentifier(_ node: Dictionary<String, Any>) -> String? {
+        if let identifier = node["identifier"] as? String {
+            return identifier
+        } else if let control = node["control"] as? Dictionary<String, Any> {
+            if let identifier = control["identifier"] as? String {
+                return identifier
             }
         }
         return nil
@@ -70,7 +88,11 @@ class JSONDatabase {
     }
     
     func nodeMatches(_ key: String, matching value: String, node: Dictionary<String, Any>) -> Bool {
-        if let nodeValue = node[key] as? String {
+        if key == "identifier" {
+            if let nodeValue = getIdentifier(node), nodeValue == value {
+                return true
+            }
+        } else if let nodeValue = node[key] as? String {
             if nodeValue == value {
                 return true
             }
