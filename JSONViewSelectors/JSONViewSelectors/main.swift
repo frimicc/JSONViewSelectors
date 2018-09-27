@@ -8,9 +8,7 @@
 
 import Foundation
 
-let consoleIO = ConsoleIO()
-//let input = consoleIO.readAllStdin()
-let file = URL(fileURLWithPath: "/Users/michaelfriedman/Dropbox/MacProjects/JSONViewSelectors/input.json")
+let file = URL(string: "https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json")!
 if let input = try? String(contentsOf: file) {
     let db = JSONDatabase(input)
     let selector = JSONSelector(db)
@@ -23,3 +21,7 @@ if let input = try? String(contentsOf: file) {
         }
     }
 }
+
+//
+//while let line = readLine() {
+//}

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		661BC560215A9E33003307DF /* JSONDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661BC55F215A9E33003307DF /* JSONDatabase.swift */; };
 		66B31CA6215A91EE00B40668 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B31CA5215A91EE00B40668 /* main.swift */; };
-		66B31CAD215A944E00B40668 /* ConsoleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B31CAC215A944E00B40668 /* ConsoleIO.swift */; };
 		66C77846215C73330003D9A8 /* JSONSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C77845215C73330003D9A8 /* JSONSelector.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +28,6 @@
 		661BC55F215A9E33003307DF /* JSONDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDatabase.swift; sourceTree = "<group>"; };
 		66B31CA2215A91EE00B40668 /* JSONViewSelectors */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = JSONViewSelectors; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B31CA5215A91EE00B40668 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		66B31CAC215A944E00B40668 /* ConsoleIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
 		66C77845215C73330003D9A8 /* JSONSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSelector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +64,6 @@
 				66B31CA5215A91EE00B40668 /* main.swift */,
 				661BC55F215A9E33003307DF /* JSONDatabase.swift */,
 				66C77845215C73330003D9A8 /* JSONSelector.swift */,
-				66B31CAC215A944E00B40668 /* ConsoleIO.swift */,
 			);
 			path = JSONViewSelectors;
 			sourceTree = "<group>";
@@ -131,7 +128,6 @@
 				66C77846215C73330003D9A8 /* JSONSelector.swift in Sources */,
 				661BC560215A9E33003307DF /* JSONDatabase.swift in Sources */,
 				66B31CA6215A91EE00B40668 /* main.swift in Sources */,
-				66B31CAD215A944E00B40668 /* ConsoleIO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
