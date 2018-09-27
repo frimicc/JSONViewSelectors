@@ -25,3 +25,29 @@ Compound selectors (e.g. " View#identifier") are not required, but you’ll cert
 
 There are 26 views in the given JSON file with the class of Input. Ensure the correctness of your program by asserting that it finds all 26 Inputs given the selector "Input".
 
+## Running the Code in Xcode
+
+Since this is a MacOS (Swift) application, it needs to be compiled before running.
+
+1. `git clone https://github.com/frimicc/JSONViewSelectors.git`
+2. `cd JSONViewSelectors`
+3. `open JSONViewSelectors/JSONViewSelectors.xcodeproj`
+4. Click on the triangle to Build & Run.
+5. The console, STDIN and STDOUT, is the right-hand pane that pops up at the bottom of the center section of Xcode.
+6. Click in that box twice to get an insertion point so you can type.
+
+## Running the Code in Terminal
+
+Xcode builds the app in its own directories, not in the project directory. To find it follow the steps for running
+in Xcode and then:
+
+1. Type `q` to stop the program in the console.
+2. Choose the folder icon in the upper left of Xcode, or type `cmd-1`.
+3. Open the disclosure triangle for "Products" in the left sidebar.
+4. Select the "JSONViewSelectors" under "Products".
+5. Show the right sidebar, if it isn't already showing, and choose the file icon. (Or type `cmd-opt-1`.
+6. Select the "Full Path" for the executable from the right sidebar.
+7. Open a Terminal window and paste in the path to the executable. It should run and show usage info.
+8. To use the testing database file, add `--db https://raw.githubusercontent.com/jdolan/quetoo/master/src/cgame/default/ui/settings/SystemViewController.json` to the command.
+
+Have fun!
