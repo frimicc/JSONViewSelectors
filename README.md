@@ -21,7 +21,7 @@ The program must support simple selectors for the following view attributes:
 
 You can effectively ignore all other attributes in the JSON model for the purpose of selector matching.
 
-Compound selectors (e.g. " View#identifier") are not required, but you’ll certainly impress us if you support them.  Selector chains (e.g. " StackView .container") are not required, but again, you’ll certainly impress us if you support those, too.
+NOTE: Compound selectors are not implemented.
 
 There are 26 views in the given JSON file with the class of Input. Ensure the correctness of your program by asserting that it finds all 26 Inputs given the selector "Input".
 
