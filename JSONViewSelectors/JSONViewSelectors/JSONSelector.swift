@@ -15,6 +15,22 @@ class JSONSelector {
         self.db = db
     }
     
+    func selectFromDB(_ query: String) -> [Dictionary<String, Any>]? {
+        if query.count > 1 {
+            switch query.first {
+            case ".":
+                let realQuery = query[query.index(after: query.startIndex)...]
+                return locateClassName(String(realQuery))
+            case "#":
+                let realQuery = query[query.index(after: query.startIndex)...]
+                return locateIdentifier(String(realQuery))
+            default:
+                return locateClass(query)
+            }
+        }
+        return nil
+    }
+    
     func locateClass(_ str: String) -> [Dictionary<String, Any>]? {
         if let matchingSubviews = db.search(matching: {(item) -> Bool in
             if let nodeValue = item["class"] as? String, nodeValue == str {
