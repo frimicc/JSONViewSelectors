@@ -33,50 +33,12 @@ class JSONDatabase {
         return nil
     }
     
-    func locateClass(_ str: String) -> [Dictionary<String, Any>]? {
-        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
-                return nodeMatches("class", matching: str, node: item)
-            }) {
-            return matchingSubviews
-        }
-        return nil
-    }
-
-    func locateIdentifier(_ str: String) -> [Dictionary<String, Any>]? {
-        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
-            return nodeMatches("identifier", matching: str, node: item)
-        }) {
-            return matchingSubviews
-        }
-        return nil
-    }
-
-    func locateClassName(_ str: String) -> [Dictionary<String, Any>]? {
-        if let matchingSubviews = searchSubviews(node: dict, matching: {(item) -> Bool in
-            return nodeMatches("classNames", matching: str, node: item)
-        }) {
-            return matchingSubviews
-        }
-        return nil
-    }
-
     func getSubviews(_ node: Dictionary<String, Any>) -> [Dictionary<String, Any>]? {
         if let subviews = node["subviews"] as? [Dictionary<String, Any>] {
             return subviews
         } else if let contentView = node["contentView"] as? Dictionary<String, Any> {
             if let subviews = contentView["subviews"] as? [Dictionary<String, Any>] {
                 return subviews
-            }
-        }
-        return nil
-    }
-    
-    func getIdentifier(_ node: Dictionary<String, Any>) -> String? {
-        if let identifier = node["identifier"] as? String {
-            return identifier
-        } else if let control = node["control"] as? Dictionary<String, Any> {
-            if let identifier = control["identifier"] as? String {
-                return identifier
             }
         }
         return nil
@@ -100,24 +62,11 @@ class JSONDatabase {
         return nil
     }
     
-    func nodeMatches(_ key: String, matching value: String, node: Dictionary<String, Any>) -> Bool {
-        if key == "classNames" {
-            if let classNames = node["classNames"] as? [String] {
-                for name in classNames {
-                    if name == value {
-                        return true
-                    }
-                }
-            }
-        } else if key == "identifier" {
-            if let nodeValue = getIdentifier(node), nodeValue == value {
-                return true
-            }
-        } else if let nodeValue = node[key] as? String {
-            if nodeValue == value {
-                return true
-            }
+    func search(matching matchCallback: (Dictionary<String, Any>) -> Bool) -> [Dictionary<String, Any>]? {
+        if matchCallback(dict) {
+            return [dict]
+        } else {
+            return searchSubviews(node: dict, matching: matchCallback)
         }
-        return false
     }
 }

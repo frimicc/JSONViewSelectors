@@ -13,10 +13,12 @@ let consoleIO = ConsoleIO()
 let file = URL(fileURLWithPath: "/Users/michaelfriedman/Dropbox/MacProjects/JSONViewSelectors/input.json")
 if let input = try? String(contentsOf: file) {
     let db = JSONDatabase(input)
-    if let inputNodes = db.locateClassName("column") {
+    let selector = JSONSelector(db)
+    if let inputNodes = selector.locateClassName("column") {
+        print("Found \(inputNodes.count) matches:")
         for item in inputNodes {
             if let output = db.itemAsJSON(item) {
-                print("matches: \(output)")
+                print(output)
             }
         }
     }
